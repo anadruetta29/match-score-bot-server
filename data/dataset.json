@@ -1,0 +1,27 @@
+{
+    "id": "communication",
+    "text": "Do you enjoy spending time talking with this person?",
+    "options": [
+        {"id": 0, "label": "Yes", "score": 2},
+        {"id": 1, "label": "Sometimes", "score": 1},
+        {"id": 2, "label": "No", "score": 0},
+    ],
+},
+{
+    "id": "comfort",
+    "text": "Do you feel comfortable being yourself around them?",
+    "options": [
+        {"id": 0, "label": "Yes", "score": 2},
+        {"id": 1, "label": "Sometimes", "score": 1},
+        {"id": 2, "label": "No", "score": 0},
+    ],
+},
+{
+    "id": "values",
+    "text": "Do you share similar values?",
+    "options": [
+        {"id": 0, "label": "Yes", "score": 2},
+        {"id": 1, "label": "Some", "score": 1},
+        {"id": 2, "label": "No", "score": 0},
+    ],
+},
