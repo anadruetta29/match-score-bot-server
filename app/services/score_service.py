@@ -10,11 +10,6 @@ class ScoreService:
         return self._normalize(raw_score)
 
     def _normalize(self, raw_score: int) -> int:
-        """
-        Converts raw score into a 1–10 scale
-        """
-
-        # Example normalization logic
         if raw_score <= 2:
             return 3
         elif raw_score <= 4:

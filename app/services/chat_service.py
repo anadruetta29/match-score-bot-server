@@ -3,12 +3,12 @@ from app.services.score_service import ScoreService
 from app.services.question_service import QuestionService
 
 score_service = ScoreService()
-
+session_service = SessionService()
 
 class ChatService:
 
     def handle_message(self, option_id: int | None, session_id: str | None):
-        session_id, session = SessionService.get_or_create(session_id)
+        session = session_service.get_or_create(session_id)
 
         questions = QuestionService.load()
         step = session["step"]
