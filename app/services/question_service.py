@@ -1,8 +1,7 @@
 import json
 from pathlib import Path
 
-DATASET_PATH = Path(__file__).resolve().parent.parent / "data" / "dataset.json"
-
+DATASET_PATH = Path("data/dataset.json")
 
 class QuestionService:
     _questions = None
@@ -11,6 +10,5 @@ class QuestionService:
     def load(cls):
         if cls._questions is None:
             with open(DATASET_PATH, "r", encoding="utf-8") as f:
-                cls._questions = json.load(f)["questions"]
-
+                cls._questions = json.load(f)
         return cls._questions
