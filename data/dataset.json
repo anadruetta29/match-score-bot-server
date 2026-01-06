@@ -1,6 +1,7 @@
 [
   {
-    "id": "comunicacion",
+    "id": "communication",
+    "topic": "comunicación",
     "text": "¿Disfrutas pasar tiempo hablando con esta persona?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -9,7 +10,8 @@
     ]
   },
   {
-    "id": "comodidad",
+    "id": "comfort",
+    "topic": "comodidad",
     "text": "¿Te sientes cómodo siendo tú mismo con esta persona?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -18,7 +20,8 @@
     ]
   },
   {
-    "id": "valores",
+    "id": "values",
+    "topic": "valores",
     "text": "¿Comparten valores similares?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -27,7 +30,8 @@
     ]
   },
   {
-    "id": "intereses",
+    "id": "interests",
+    "topic": "intereses",
     "text": "¿Tienen intereses o hobbies en común?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -36,7 +40,8 @@
     ]
   },
   {
-    "id": "confianza",
+    "id": "trust",
+    "topic": "confianza",
     "text": "¿Confías en esta persona?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -45,7 +50,8 @@
     ]
   },
   {
-    "id": "apoyo",
+    "id": "support",
+    "topic": "apoyo",
     "text": "¿Sientes que esta persona te apoya?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -54,7 +60,8 @@
     ]
   },
   {
-    "id": "diversion",
+    "id": "fun",
+    "topic": "diversión",
     "text": "¿Se divierten juntos?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -63,7 +70,8 @@
     ]
   },
   {
-    "id": "respeto",
+    "id": "respect",
+    "topic": "respeto",
     "text": "¿Sientes que esta persona te respeta?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -72,7 +80,8 @@
     ]
   },
   {
-    "id": "comunicacion_conflictos",
+    "id": "conflict_communication",
+    "topic": "comunicación de conflictos",
     "text": "¿Pueden hablar de conflictos abiertamente?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -81,7 +90,8 @@
     ]
   },
   {
-    "id": "compromiso",
+    "id": "commitment",
+    "topic": "compromiso",
     "text": "¿Sientes que hay compromiso mutuo?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -90,7 +100,8 @@
     ]
   },
   {
-    "id": "honestidad",
+    "id": "honesty",
+    "topic": "honestidad",
     "text": "¿Consideras que esta persona es honesta contigo?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
@@ -99,7 +110,8 @@
     ]
   },
   {
-    "id": "empatía",
+    "id": "empathy",
+    "topic": "empatía",
     "text": "¿Sientes que esta persona entiende tus sentimientos?",
     "options": [
       {"id": 0, "label": "Sí", "score": 2},
