@@ -1,6 +1,6 @@
 from typing import List, Optional
-from app.domain.models.answer import Answer
-from app.domain.models.score import Score
+from app.domain.entities.answer import Answer
+from app.domain.entities.score import Score
 
 class Session:
     def __init__(
@@ -19,5 +19,5 @@ class Session:
         self.answers.append(answer)
 
     def get_score(self) -> Score:
-        from app.domain.models.score import Score
+        from app.domain.entities.score import Score
         return Score(self.answers)

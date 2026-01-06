@@ -1,6 +1,6 @@
 from typing import Optional
-from app.domain.models.question import Question
-from app.domain.models.score import Score
+from app.domain.entities.question import Question
+from app.domain.entities.score import Score
 
 class Chat:
     def __init__(

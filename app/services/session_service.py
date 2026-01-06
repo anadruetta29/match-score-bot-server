@@ -1,5 +1,5 @@
 import uuid
-from app.domain.models.session import Session
+from app.domain.entities.session import Session
 
 _sessions: dict[str, Session] = {}
 
@@ -21,7 +21,7 @@ class SessionService:
         if not session:
             session_id, session = SessionService.get_or_create(None)
 
-        from app.domain.models.answer import Answer
+        from app.domain.entities.answer import Answer
         answer = Answer(question_id=question_id, option_id=option_id, score=score)
         session.add_answer(answer)
 
