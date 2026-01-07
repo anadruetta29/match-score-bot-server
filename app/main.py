@@ -1,18 +1,22 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from app.services.chat_service import ChatService
-from app.services.chat_session_state import ChatSessionStateService
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends
+from app.services.interfaces.chat_interface import ChatServiceInterface
 from app.domain.dto.chat.response.chat_session_state_res import ChatSessionResponse
+from app.services.interfaces.chat_session_state_interface import ChatSessionStateServiceInterface
+from app.config.dependencies import (get_chat_session_state_service, get_chat_service)
+
 from app.config.exceptions.invalid_option import InvalidOptionError
 app = FastAPI(title="Match Score Bot API")
-chat_service = ChatService()
-chat_session_service = ChatSessionStateService()
 
 @app.get("/")
 def root():
     return {"status": "Match Score Bot API running"}
 
 @app.websocket("/ws/chat")
-async def websocket_chat(websocket: WebSocket):
+async def websocket_chat(
+        websocket: WebSocket,
+        chat_service: ChatServiceInterface = Depends(get_chat_service),
+        chat_session_service: ChatSessionStateServiceInterface = Depends(get_chat_session_state_service)
+    ):
     await websocket.accept()
     session_state = None
     started = False

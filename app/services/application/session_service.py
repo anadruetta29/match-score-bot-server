@@ -2,7 +2,7 @@ import uuid
 from app.domain.entities.session import Session
 from app.database.repository.session import SessionRepository
 from app.config.exceptions.session_not_found import SessionNotFoundError
-from app.services.answer_service import AnswerService
+from app.services.application.answer_service import AnswerService
 from app.domain.entities.answer import Answer
 
 answer_service = AnswerService()
@@ -35,13 +35,13 @@ class SessionService:
         session.add_answer(answer)
 
     @staticmethod
-    def finish_session(session_id: str):
+    def finish_session(session_id: str, final_score: int):
         session = _sessions.get(session_id)
         if not session:
             raise SessionNotFoundError(session_id)
 
         session.finish()
-        session_repository.finish(session_id)
+        session_repository.finish(session_id, final_score)
 
     @staticmethod
     def get_score(session_id: str):

@@ -1,10 +1,9 @@
-from app.services.session_service import SessionService
-from app.services.score_service import ScoreService
-from app.services.question_service import QuestionService
+from app.services.application.session_service import SessionService
+from app.services.application.score_service import ScoreService
+from app.services.application.question_service import QuestionService
 from app.domain.entities.answer import Answer
 from app.domain.entities.chat_session_state import ChatSessionState
-from app.database.repository.answer import AnswerRepository
-from app.services.chat_session_state import ChatSessionStateService
+from app.services.application.chat_session_state import ChatSessionStateService
 from app.config.exceptions.invalid_option import InvalidOptionError
 import random
 
@@ -39,11 +38,12 @@ class ChatService:
         if option_id is None or option_id < 0 or option_id >= len(current_question.options):
             raise InvalidOptionError(option_id)
 
-        score = current_question.options[option_id]["score"]
+        selected_option = current_question.options[option_id]
+
         answer = Answer(
             question_id=current_question.id,
             option_id=option_id,
-            score=score
+            score=selected_option["score"]
         )
 
         session_service.add_answer(state.session.session_id, answer)
@@ -55,17 +55,16 @@ class ChatService:
 
         result = None
         if finished:
-            raw_score = state.session.get_score().total_score
-
-            max_score_total = sum(
-                max(opt["score"] for opt in q.options)
-                for q in state.questions
+            final_score = score_service.calculate_final_score(
+                state.session.answers,
+                state.questions
             )
 
-            normalized = score_service._normalize(raw_score, max_score_total)
+            session_service.finish_session(
+                state.session.session_id,
+                final_score
+            )
 
-            session_service.finish_session(state.session.session_id)
-
-            result = {"score": normalized}
+            result = {"score": final_score}
 
         return next_question, result, finished
