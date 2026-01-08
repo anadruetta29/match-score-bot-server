@@ -1,6 +1,7 @@
 from app.database.session import SessionLocal
 from app.database.models.session import SessionModel
-from datetime import datetime
+from app.config.exceptions.session_not_found import SessionNotFoundError
+from datetime import datetime, UTC
 
 
 class SessionRepository:
@@ -18,9 +19,12 @@ class SessionRepository:
         db = SessionLocal()
         try:
             session = db.query(SessionModel).filter_by(id=session_id).first()
-            if session:
-                session.finished_at = datetime.utcnow()
-                session.final_score = final_score
-                db.commit()
+            if not session:
+                raise SessionNotFoundError(session_id)
+
+            session.finished_at = datetime.now(UTC)
+            session.final_score = final_score
+            db.commit()
         finally:
             db.close()
+
