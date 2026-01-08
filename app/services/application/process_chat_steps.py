@@ -3,6 +3,9 @@ from app.domain.entities.chat_session_state import ChatSessionState
 from app.domain.dto.chat.response.chat_session_state_res import ChatSessionStateResponse
 from app.config.exceptions.invalid_option import InvalidOptionError
 
+from app.domain.entities.chat_status import ChatStatus
+
+
 class ProcessChatSteps:
 
     def __init__(self, chat_service: ChatServiceInterface):
@@ -21,13 +24,24 @@ class ProcessChatSteps:
         if option_id == 0:
             new_state = self.chat_service.start_session(session_id)
             res = ChatSessionStateResponse.from_domain(new_state)
-            return {"response": res.to_dict(), "new_state": new_state, "should_close": False}
 
-        return {"response": {"finished": True, "result": {"score": 0}}, "new_state": None, "should_close": True}
+            return {
+                "response": res.to_dict(),
+                "new_state": new_state,
+                "should_close": new_state.status == ChatStatus.FINISHED
+            }
+
+        return {
+            "response": {"finished": True, "result": {"score": 0}},
+            "new_state": None,
+            "should_close": True
+        }
 
     def _handle_ongoing_chat(self, state, option_id):
         try:
+
             next_q, result, finished = self.chat_service.handle_answer(state, option_id)
+
             res = ChatSessionStateResponse.from_domain(state, next_q)
             return {
                 "response": {"session": res.to_dict(), "result": result, "finished": finished},

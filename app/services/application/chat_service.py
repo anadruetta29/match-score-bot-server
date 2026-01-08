@@ -8,6 +8,8 @@ from app.domain.entities.answer import Answer
 
 from app.config.exceptions.invalid_option import InvalidOptionError
 
+from app.domain.entities.chat_status import ChatStatus
+
 import random
 
 class ChatService:
@@ -37,7 +39,7 @@ class ChatService:
         return ChatSessionState(
             session=session,
             questions=selected_questions,
-            status="started",
+            status=ChatStatus.STARTED,
             step=0
         )
 
@@ -59,7 +61,7 @@ class ChatService:
 
         self.chat_session_service.advance_step(state)
 
-        finished = state.status == "finished"
+        finished = state.status == ChatStatus.FINISHED
         next_question = self.chat_session_service.current_question(state)
 
         result = None
