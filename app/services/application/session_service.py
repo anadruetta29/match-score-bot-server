@@ -2,19 +2,23 @@ import uuid
 from app.domain.entities.session import Session
 from app.database.repository.session import SessionRepository
 from app.config.exceptions.session_not_found import SessionNotFoundError
-from app.services.application.answer_service import AnswerService
+
+from app.services.interfaces.answer_interface import AnswerServiceInterface
+
 from app.domain.entities.answer import Answer
 
-answer_service = AnswerService()
-
-session_repository = SessionRepository()
+session_repository: SessionRepository = SessionRepository()
 
 _sessions: dict[str, Session] = {}
 
 class SessionService:
+    def __init__(
+        self,
+        answer_service: AnswerServiceInterface,
+    ):
+        self.answer_service = answer_service
 
-    @staticmethod
-    def get_or_create(session_id: str | None) -> Session:
+    def get_or_create(self, session_id: str | None) -> Session:
         if session_id and session_id in _sessions:
             return _sessions[session_id]
 
@@ -26,22 +30,22 @@ class SessionService:
 
         return session
 
-    @staticmethod
-    def add_answer(session_id: str, answer: Answer):
+    def add_answer(self, session_id: str, answer: Answer):
         session = _sessions.get(session_id)
         if not session:
             raise SessionNotFoundError(session_id)
 
         session.add_answer(answer)
+        self.answer_service.save_answer(session_id, answer)
 
-    @staticmethod
-    def finish_session(session_id: str, final_score: int):
+    def finish_session(self, session_id: str, final_score: int, features: dict):
         session = _sessions.get(session_id)
         if not session:
             raise SessionNotFoundError(session_id)
 
         session.finish()
-        session_repository.finish(session_id, final_score)
+        session.features = features
+        session_repository.finish(session_id, final_score, features)
 
     @staticmethod
     def get_score(session_id: str):
@@ -49,3 +53,6 @@ class SessionService:
         if not session:
             return 0
         return session.get_score()
+
+    def update_feedback(self, session_id: str, is_useful: bool):
+        session_repository.update_feedback(session_id, is_useful)

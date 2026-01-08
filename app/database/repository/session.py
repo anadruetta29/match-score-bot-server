@@ -15,7 +15,7 @@ class SessionRepository:
         finally:
             db.close()
 
-    def finish(self, session_id: str, final_score: int):
+    def finish(self, session_id: str, final_score: int, features: dict):
         db = SessionLocal()
         try:
             session = db.query(SessionModel).filter_by(id=session_id).first()
@@ -23,8 +23,21 @@ class SessionRepository:
                 raise SessionNotFoundError(session_id)
 
             session.finished_at = datetime.now(UTC)
-            session.final_score = final_score
+
+            session.total_score = final_score
+
+            session.features = features
+
             db.commit()
         finally:
             db.close()
 
+    def update_feedback(self, session_id: str, is_useful: bool):
+        db = SessionLocal()
+        try:
+            session = db.query(SessionModel).filter_by(id=session_id).first()
+            if session:
+                session.user_feedback = is_useful
+                db.commit()
+        finally:
+            db.close()

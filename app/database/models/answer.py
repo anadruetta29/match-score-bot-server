@@ -19,3 +19,5 @@ class AnswerModel(Base):
     timestamp = Column(DateTime, default=datetime.utcnow)
 
     session = relationship("SessionModel", back_populates="answers")
+
+

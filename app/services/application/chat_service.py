@@ -53,7 +53,10 @@ class ChatService:
 
         answer = Answer(
             question_id=current_question.id,
+            question_text=current_question.text,
+            topic=current_question.topic,
             option_id=option_id,
+            option_text=selected_option["label"],
             score=selected_option["score"]
         )
 
@@ -66,17 +69,22 @@ class ChatService:
 
         result = None
         if finished:
-            final_score = self.score_service.calculate_final_score(
+            calculation = self.score_service.calculate_final_score(
                 state.session.answers,
                 state.questions
             )
 
             self.session_service.finish_session(
                 state.session.session_id,
-                final_score
+                final_score=calculation["score"],
+                features=calculation["features"]
             )
 
-            result = {"score": final_score}
+            result = {
+                "score": calculation["score"],
+                "session_id": state.session.session_id,
+                "message": "¿Te fue útil este consejo?"
+            }
 
         return next_question, result, finished
 

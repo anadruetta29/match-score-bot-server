@@ -6,9 +6,6 @@ from app.services.interfaces.score_interface import ScoreServiceInterface
 from app.services.interfaces.session_interface import SessionServiceInterface
 from app.services.interfaces.process_chat_steps_interface import ProcessChatStepsServiceInterface
 
-def get_session_service() -> "SessionServiceInterface":
-    from app.services.application.session_service import SessionService
-    return SessionService()
 
 def get_question_service() -> "QuestionServiceInterface":
     from app.services.application.question_service import QuestionService
@@ -41,3 +38,8 @@ def get_answer_service() -> "AnswerServiceInterface":
     from app.services.application.answer_service import AnswerService
     return AnswerService()
 
+def get_session_service() -> "SessionServiceInterface":
+    from app.services.application.session_service import SessionService
+    return SessionService(
+        answer_service=get_answer_service()
+    )

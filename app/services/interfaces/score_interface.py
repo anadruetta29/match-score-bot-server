@@ -9,3 +9,6 @@ class ScoreServiceInterface(Protocol):
         questions: List[Question]
     ) -> int:
         ...
+
+    def _scale(self, raw: int, max_score: int):
+        ...
